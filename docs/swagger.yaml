@@ -1,3 +1,44 @@
+definitions:
+  main.Article:
+    properties:
+      a:
+        $ref: '#/definitions/main.Person'
+      body:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    required:
+    - a
+    - body
+    - title
+    type: object
+  main.JSONErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  main.JSONResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
+  main.Person:
+    properties:
+      firstname:
+        type: string
+      lastname:
+        type: string
+    required:
+    - firstname
+    - lastname
+    type: object
 info:
   contact:
     email: john.doe@swagger.io
@@ -6,5 +47,59 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-paths: {}
+paths:
+  /v2/article:
+    get:
+      consumes:
+      - application/json
+      description: get articles
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/main.JSONResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/main.Article'
+                  type: array
+              type: object
+      summary: List articles
+      tags:
+      - articles
+    post:
+      consumes:
+      - application/json
+      description: create a new article
+      parameters:
+      - description: article body
+        in: body
+        name: article
+        required: true
+        schema:
+          $ref: '#/definitions/main.Article'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/main.JSONResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/main.Article'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.JSONErrorResponse'
+      summary: Create article
+      tags:
+      - articles
 swagger: "2.0"

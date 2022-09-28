@@ -15,11 +15,20 @@ func remove(slice []Article, s int) []Article {
 	return append(slice[:s], slice[s+1:]...)
 }
 
-// CreateArticle ...
+// CreateArticle godoc
+// @Summary      Create article
+// @Description  create a new article
+// @Tags         articles
+// @Accept       json
+// @Param article body Article true "article body"
+// @Produce      json
+// @Success      201  {object}  JSONResponse{data=[]Article}
+// @Failure      400  {object}  JSONErrorResponse
+// @Router       /v2/article [post]
 func CreateArticle(c *gin.Context) {
 	var article Article
 	if err := c.ShouldBindJSON(&article); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, JSONErrorResponse{Error: err.Error()})
 		return
 	}
 
@@ -29,37 +38,42 @@ func CreateArticle(c *gin.Context) {
 
 	InMemoryArticleData = append(InMemoryArticleData, article)
 
-	c.JSON(http.StatusCreated, gin.H{
-		"data":    InMemoryArticleData,
-		"message": "Article | Create",
+	c.JSON(http.StatusCreated, JSONResponse{
+		Message: "Article | GetList",
+		Data:    InMemoryArticleData,
 	})
 }
 
-// GetArticleByID ...
 var GetArticleByID = func(c *gin.Context) {
 	idStr := c.Param("id")
 
 	for _, v := range InMemoryArticleData {
 		if v.ID == idStr {
-			c.JSON(http.StatusOK, gin.H{
-				"message": "Article | GetByID",
-				"data":    v,
+			c.JSON(http.StatusOK, JSONResponse{
+				Message: "Article | GetByID",
+				Data:    v,
 			})
 			return
 		}
 	}
 
-	c.JSON(http.StatusNotFound, gin.H{
-		"message": "Article | GetByID | NOT FOUND",
-		"data":    nil,
+	c.JSON(http.StatusNotFound, JSONErrorResponse{
+		Error: "Article | GetByID | NOT FOUND",
 	})
 }
 
-// GetArticleList ...
+// GetArticleList godoc
+// @Summary      List articles
+// @Description  get articles
+// @Tags         articles
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}   JSONResponse{data=[]Article}
+// @Router       /v2/article [get]
 func GetArticleList(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Article | GetList",
-		"data":    InMemoryArticleData,
+	c.JSON(http.StatusOK, JSONResponse{
+		Message: "Article | GetList",
+		Data:    InMemoryArticleData,
 	})
 }
 

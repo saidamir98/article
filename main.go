@@ -20,9 +20,11 @@ func main() {
 	// programmatically set swagger info
 	docs.SwaggerInfo.Title = "Swagger Example API"
 	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
-	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Version = "2.0"
 
-	InMemoryArticleData = make([]Article, 0)
+	InMemoryArticleData = append(InMemoryArticleData, Article{
+		ID: "1",
+	})
 	r := gin.Default()
 
 	r.GET("/ping", func(c *gin.Context) {
