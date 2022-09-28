@@ -20,8 +20,8 @@ func remove(slice []Article, s int) []Article {
 // @Description  create a new article
 // @Tags         articles
 // @Accept       json
-// @Param article body Article true "article body"
 // @Produce      json
+// @Param article body Article true "article body"
 // @Success      201  {object}  JSONResponse{data=[]Article}
 // @Failure      400  {object}  JSONErrorResponse
 // @Router       /v2/article [post]
@@ -44,7 +44,17 @@ func CreateArticle(c *gin.Context) {
 	})
 }
 
-var GetArticleByID = func(c *gin.Context) {
+// GetArticleByID godoc
+// @Summary      get article by id
+// @Description  get an article by id
+// @Tags         articles
+// @Accept       json
+// @Param        id   path      string  true  "Article ID"
+// @Produce      json
+// @Success      200  {object}  JSONResponse{data=Article}
+// @Failure      400  {object}  JSONErrorResponse
+// @Router       /v2/article/{id} [get]
+func GetArticleByID(c *gin.Context) {
 	idStr := c.Param("id")
 
 	for _, v := range InMemoryArticleData {

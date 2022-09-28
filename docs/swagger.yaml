@@ -102,4 +102,34 @@ paths:
       summary: Create article
       tags:
       - articles
+  /v2/article/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get an article by id
+      parameters:
+      - description: Article ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/main.JSONResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/main.Article'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.JSONErrorResponse'
+      summary: get article by id
+      tags:
+      - articles
 swagger: "2.0"
