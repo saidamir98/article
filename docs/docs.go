@@ -80,7 +80,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.Article"
+                            "$ref": "#/definitions/main.CreateArticleModel"
                         }
                     }
                 ],
@@ -195,6 +195,25 @@ const docTemplate = `{
                 }
             }
         },
+        "main.CreateArticleModel": {
+            "type": "object",
+            "required": [
+                "a",
+                "body",
+                "title"
+            ],
+            "properties": {
+                "a": {
+                    "$ref": "#/definitions/main.Person"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
         "main.JSONErrorResponse": {
             "type": "object",
             "properties": {
@@ -220,10 +239,16 @@ const docTemplate = `{
             ],
             "properties": {
                 "firstname": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "John",
+                    "maxLength": 50,
+                    "minLength": 2
                 },
                 "lastname": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 2,
+                    "example": "Doe"
                 }
             }
         }

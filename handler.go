@@ -21,7 +21,7 @@ func remove(slice []Article, s int) []Article {
 // @Tags        articles
 // @Accept      json
 // @Produce     json
-// @Param       article body     Article true "article body"
+// @Param       article body     CreateArticleModel true "article body"
 // @Success     201     {object} JSONResponse{data=[]Article}
 // @Failure     400     {object} JSONErrorResponse
 // @Router      /v2/article [post]
@@ -31,6 +31,8 @@ func CreateArticle(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, JSONErrorResponse{Error: err.Error()})
 		return
 	}
+
+	// TODO - validation should be here
 
 	id := uuid.New()
 	article.ID = id.String()
