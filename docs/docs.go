@@ -43,7 +43,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/main.JSONResponse"
+                                    "$ref": "#/definitions/models.JSONResponse"
                                 },
                                 {
                                     "type": "object",
@@ -51,7 +51,7 @@ const docTemplate = `{
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/main.Article"
+                                                "$ref": "#/definitions/models.Article"
                                             }
                                         }
                                     }
@@ -80,7 +80,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.CreateArticleModel"
+                            "$ref": "#/definitions/models.CreateArticleModel"
                         }
                     }
                 ],
@@ -90,7 +90,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/main.JSONResponse"
+                                    "$ref": "#/definitions/models.JSONResponse"
                                 },
                                 {
                                     "type": "object",
@@ -98,7 +98,7 @@ const docTemplate = `{
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/main.Article"
+                                                "$ref": "#/definitions/models.Article"
                                             }
                                         }
                                     }
@@ -109,7 +109,7 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/main.JSONErrorResponse"
+                            "$ref": "#/definitions/models.JSONErrorResponse"
                         }
                     }
                 }
@@ -143,13 +143,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/main.JSONResponse"
+                                    "$ref": "#/definitions/models.JSONResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/main.Article"
+                                            "$ref": "#/definitions/models.Article"
                                         }
                                     }
                                 }
@@ -159,7 +159,7 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/main.JSONErrorResponse"
+                            "$ref": "#/definitions/models.JSONErrorResponse"
                         }
                     }
                 }
@@ -167,7 +167,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "main.Article": {
+        "models.Article": {
             "type": "object",
             "required": [
                 "a",
@@ -176,7 +176,7 @@ const docTemplate = `{
             ],
             "properties": {
                 "a": {
-                    "$ref": "#/definitions/main.Person"
+                    "$ref": "#/definitions/models.Person"
                 },
                 "body": {
                     "type": "string"
@@ -195,7 +195,7 @@ const docTemplate = `{
                 }
             }
         },
-        "main.CreateArticleModel": {
+        "models.CreateArticleModel": {
             "type": "object",
             "required": [
                 "a",
@@ -204,7 +204,7 @@ const docTemplate = `{
             ],
             "properties": {
                 "a": {
-                    "$ref": "#/definitions/main.Person"
+                    "$ref": "#/definitions/models.Person"
                 },
                 "body": {
                     "type": "string"
@@ -214,7 +214,7 @@ const docTemplate = `{
                 }
             }
         },
-        "main.JSONErrorResponse": {
+        "models.JSONErrorResponse": {
             "type": "object",
             "properties": {
                 "error": {
@@ -222,7 +222,7 @@ const docTemplate = `{
                 }
             }
         },
-        "main.JSONResponse": {
+        "models.JSONResponse": {
             "type": "object",
             "properties": {
                 "data": {},
@@ -231,7 +231,7 @@ const docTemplate = `{
                 }
             }
         },
-        "main.Person": {
+        "models.Person": {
             "type": "object",
             "required": [
                 "firstname",
@@ -240,9 +240,9 @@ const docTemplate = `{
             "properties": {
                 "firstname": {
                     "type": "string",
-                    "default": "John",
                     "maxLength": 50,
-                    "minLength": 2
+                    "minLength": 2,
+                    "example": "John"
                 },
                 "lastname": {
                     "type": "string",

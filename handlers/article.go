@@ -1,17 +1,19 @@
-package main
+package handlers
 
 import (
 	"net/http"
 	"time"
+
+	"uacademy/article/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
 // InMemoryArticleData ...
-var InMemoryArticleData []Article
+var InMemoryArticleData []models.Article
 
-func remove(slice []Article, s int) []Article {
+func remove(slice []models.Article, s int) []models.Article {
 	return append(slice[:s], slice[s+1:]...)
 }
 
@@ -21,14 +23,14 @@ func remove(slice []Article, s int) []Article {
 // @Tags        articles
 // @Accept      json
 // @Produce     json
-// @Param       article body     CreateArticleModel true "article body"
-// @Success     201     {object} JSONResponse{data=[]Article}
-// @Failure     400     {object} JSONErrorResponse
+// @Param       article body     models.CreateArticleModel true "article body"
+// @Success     201     {object} models.JSONResponse{data=[]models.Article}
+// @Failure     400     {object} models.JSONErrorResponse
 // @Router      /v2/article [post]
 func CreateArticle(c *gin.Context) {
-	var article Article
+	var article models.Article
 	if err := c.ShouldBindJSON(&article); err != nil {
-		c.JSON(http.StatusBadRequest, JSONErrorResponse{Error: err.Error()})
+		c.JSON(http.StatusBadRequest, models.JSONErrorResponse{Error: err.Error()})
 		return
 	}
 
@@ -40,7 +42,7 @@ func CreateArticle(c *gin.Context) {
 
 	InMemoryArticleData = append(InMemoryArticleData, article)
 
-	c.JSON(http.StatusCreated, JSONResponse{
+	c.JSON(http.StatusCreated, models.JSONResponse{
 		Message: "Article | GetList",
 		Data:    InMemoryArticleData,
 	})
@@ -53,15 +55,15 @@ func CreateArticle(c *gin.Context) {
 // @Accept      json
 // @Param       id path string true "Article ID"
 // @Produce     json
-// @Success     200 {object} JSONResponse{data=Article}
-// @Failure     400 {object} JSONErrorResponse
+// @Success     200 {object} models.JSONResponse{data=models.Article}
+// @Failure     400 {object} models.JSONErrorResponse
 // @Router      /v2/article/{id} [get]
 func GetArticleByID(c *gin.Context) {
 	idStr := c.Param("id")
 
 	for _, v := range InMemoryArticleData {
 		if v.ID == idStr {
-			c.JSON(http.StatusOK, JSONResponse{
+			c.JSON(http.StatusOK, models.JSONResponse{
 				Message: "Article | GetByID",
 				Data:    v,
 			})
@@ -69,7 +71,7 @@ func GetArticleByID(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusNotFound, JSONErrorResponse{
+	c.JSON(http.StatusNotFound, models.JSONErrorResponse{
 		Error: "Article | GetByID | NOT FOUND",
 	})
 }
@@ -80,10 +82,10 @@ func GetArticleByID(c *gin.Context) {
 // @Tags        articles
 // @Accept      json
 // @Produce     json
-// @Success     200 {object} JSONResponse{data=[]Article}
+// @Success     200 {object} models.JSONResponse{data=[]models.Article}
 // @Router      /v2/article [get]
 func GetArticleList(c *gin.Context) {
-	c.JSON(http.StatusOK, JSONResponse{
+	c.JSON(http.StatusOK, models.JSONResponse{
 		Message: "Article | GetList",
 		Data:    InMemoryArticleData,
 	})
@@ -91,7 +93,7 @@ func GetArticleList(c *gin.Context) {
 
 // UpdateArticle ...
 func UpdateArticle(c *gin.Context) {
-	var article Article
+	var article models.Article
 	if err := c.ShouldBindJSON(&article); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

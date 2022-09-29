@@ -1,8 +1,8 @@
 definitions:
-  main.Article:
+  models.Article:
     properties:
       a:
-        $ref: '#/definitions/main.Person'
+        $ref: '#/definitions/models.Person'
       body:
         type: string
       created_at:
@@ -18,10 +18,10 @@ definitions:
     - body
     - title
     type: object
-  main.CreateArticleModel:
+  models.CreateArticleModel:
     properties:
       a:
-        $ref: '#/definitions/main.Person'
+        $ref: '#/definitions/models.Person'
       body:
         type: string
       title:
@@ -31,21 +31,21 @@ definitions:
     - body
     - title
     type: object
-  main.JSONErrorResponse:
+  models.JSONErrorResponse:
     properties:
       error:
         type: string
     type: object
-  main.JSONResponse:
+  models.JSONResponse:
     properties:
       data: {}
       message:
         type: string
     type: object
-  main.Person:
+  models.Person:
     properties:
       firstname:
-        default: John
+        example: John
         maxLength: 50
         minLength: 2
         type: string
@@ -79,11 +79,11 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/main.JSONResponse'
+            - $ref: '#/definitions/models.JSONResponse'
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/main.Article'
+                    $ref: '#/definitions/models.Article'
                   type: array
               type: object
       summary: List articles
@@ -99,7 +99,7 @@ paths:
         name: article
         required: true
         schema:
-          $ref: '#/definitions/main.CreateArticleModel'
+          $ref: '#/definitions/models.CreateArticleModel'
       produces:
       - application/json
       responses:
@@ -107,17 +107,17 @@ paths:
           description: Created
           schema:
             allOf:
-            - $ref: '#/definitions/main.JSONResponse'
+            - $ref: '#/definitions/models.JSONResponse'
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/main.Article'
+                    $ref: '#/definitions/models.Article'
                   type: array
               type: object
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/main.JSONErrorResponse'
+            $ref: '#/definitions/models.JSONErrorResponse'
       summary: Create article
       tags:
       - articles
@@ -139,15 +139,15 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/main.JSONResponse'
+            - $ref: '#/definitions/models.JSONResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/main.Article'
+                  $ref: '#/definitions/models.Article'
               type: object
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/main.JSONErrorResponse'
+            $ref: '#/definitions/models.JSONErrorResponse'
       summary: get article by id
       tags:
       - articles
