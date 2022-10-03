@@ -24,15 +24,20 @@ func main() {
 	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
 	docs.SwaggerInfo.Version = "2.0"
 
-	err := storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err := storage.AddAuthor("eb9eb7f9-47ca-4f75-815b-cd5c901b4df2", models.CreateAuthorModel{
+		Firstname: "John",
+		Lastname:  "Doe",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "Lorem",
 			Body:  "Impsume smth smth smthsmth",
 		},
-		Author: models.Person{
-			Firstname: "John",
-			Lastname:  "Doe",
-		},
+		AuthorID: "eb9eb7f9-47ca-4f75-815b-cd5c901b4df2",
 	})
 	if err != nil {
 		panic(err)

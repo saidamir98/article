@@ -146,7 +146,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/models.Article"
+                                            "$ref": "#/definitions/models.PackedArticleModel"
                                         }
                                     }
                                 }
@@ -167,13 +167,13 @@ const docTemplate = `{
         "models.Article": {
             "type": "object",
             "required": [
-                "a",
+                "author_id",
                 "body",
                 "title"
             ],
             "properties": {
-                "a": {
-                    "$ref": "#/definitions/models.Person"
+                "author_id": {
+                    "type": "string"
                 },
                 "body": {
                     "type": "string"
@@ -192,16 +192,46 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Author": {
+            "type": "object",
+            "required": [
+                "firstname",
+                "lastname"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "firstname": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 2,
+                    "example": "John"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastname": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 2,
+                    "example": "Doe"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "models.CreateArticleModel": {
             "type": "object",
             "required": [
-                "a",
+                "author_id",
                 "body",
                 "title"
             ],
             "properties": {
-                "a": {
-                    "$ref": "#/definitions/models.Person"
+                "author_id": {
+                    "type": "string"
                 },
                 "body": {
                     "type": "string"
@@ -228,24 +258,31 @@ const docTemplate = `{
                 }
             }
         },
-        "models.Person": {
+        "models.PackedArticleModel": {
             "type": "object",
             "required": [
-                "firstname",
-                "lastname"
+                "author",
+                "body",
+                "title"
             ],
             "properties": {
-                "firstname": {
-                    "type": "string",
-                    "maxLength": 50,
-                    "minLength": 2,
-                    "example": "John"
+                "author": {
+                    "$ref": "#/definitions/models.Author"
                 },
-                "lastname": {
-                    "type": "string",
-                    "maxLength": 50,
-                    "minLength": 2,
-                    "example": "Doe"
+                "body": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         }
