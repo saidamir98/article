@@ -28,7 +28,7 @@ type CreateArticleModel struct {
 type PackedArticleModel struct {
 	ID        string     `json:"id"`
 	Content              // Promoted fields
-	Author    Author     `json:"author" binding:"required"`
+	Author    Author     `json:"author"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt *time.Time `json:"updated_at"`
 	DeletedAt *time.Time `json:"-"`

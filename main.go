@@ -51,7 +51,7 @@ func main() {
 		})
 	})
 
-	v1 := r.Group("/v2")
+	v1 := r.Group("/v1")
 	{
 		v1.POST("/article", handlers.CreateArticle)
 		v1.GET("/article/:id", handlers.GetArticleByID)
