@@ -191,6 +191,27 @@ paths:
       tags:
       - articles
   /v2/author:
+    get:
+      consumes:
+      - application/json
+      description: get author
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Author'
+                  type: array
+              type: object
+      summary: List author
+      tags:
+      - authors
     post:
       consumes:
       - application/json
@@ -219,6 +240,36 @@ paths:
           schema:
             $ref: '#/definitions/models.JSONErrorResponse'
       summary: Create author
+      tags:
+      - authors
+  /v2/author/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get an author by id
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Author'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: get author by id
       tags:
       - authors
 swagger: "2.0"

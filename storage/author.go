@@ -32,3 +32,9 @@ func GetAuthorByID(id string) (models.Author, error) {
 	}
 	return result, errors.New("author not found")
 }
+
+// GetAuthorList ...
+func GetAuthorList() (resp []models.Author, err error) {
+	resp = InMemoryAuthorData
+	return resp, err
+}

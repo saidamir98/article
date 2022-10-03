@@ -51,3 +51,55 @@ func CreateAuthor(c *gin.Context) {
 		Data:    author,
 	})
 }
+
+// GetAuthorByID godoc
+// @Summary     get author by id
+// @Description get an author by id
+// @Tags        authors
+// @Accept      json
+// @Param       id path string true "Author ID"
+// @Produce     json
+// @Success     200 {object} models.JSONResponse{data=models.Author}
+// @Failure     400 {object} models.JSONErrorResponse
+// @Router      /v2/author/{id} [get]
+func GetAuthorByID(c *gin.Context) {
+	idStr := c.Param("id")
+
+	// TODO - validation
+
+	author, err := storage.GetAuthorByID(idStr)
+	if err != nil {
+		c.JSON(http.StatusNotFound, models.JSONErrorResponse{
+			Error: err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, models.JSONResponse{
+		Message: "OK",
+		Data:    author,
+	})
+}
+
+// GetAuthorList godoc
+// @Summary     List author
+// @Description get author
+// @Tags        authors
+// @Accept      json
+// @Produce     json
+// @Success     200 {object} models.JSONResponse{data=[]models.Author}
+// @Router      /v2/author [get]
+func GetAuthorList(c *gin.Context) {
+	authorList, err := storage.GetAuthorList()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, models.JSONErrorResponse{
+			Error: err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, models.JSONResponse{
+		Message: "OK",
+		Data:    authorList,
+	})
+}
