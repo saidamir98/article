@@ -161,6 +161,58 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v2/author": {
+            "post": {
+                "description": "create a new author",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "authors"
+                ],
+                "summary": "Create author",
+                "parameters": [
+                    {
+                        "description": "author body",
+                        "name": "author",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CreateAuthorModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/models.JSONResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.Author"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.JSONErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -238,6 +290,27 @@ const docTemplate = `{
                 },
                 "title": {
                     "type": "string"
+                }
+            }
+        },
+        "models.CreateAuthorModel": {
+            "type": "object",
+            "required": [
+                "firstname",
+                "lastname"
+            ],
+            "properties": {
+                "firstname": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 2,
+                    "example": "John"
+                },
+                "lastname": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 2,
+                    "example": "Doe"
                 }
             }
         },

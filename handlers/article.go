@@ -11,10 +11,6 @@ import (
 	"github.com/google/uuid"
 )
 
-func remove(slice []models.Article, s int) []models.Article {
-	return append(slice[:s], slice[s+1:]...)
-}
-
 // CreateArticle godoc
 // @Summary     Create article
 // @Description create a new article
@@ -158,4 +154,8 @@ func DeleteArticle(c *gin.Context) {
 		"message": "Article | Delete | NOT FOUND",
 		"data":    nil,
 	})
+}
+
+func remove(slice []models.Article, s int) []models.Article {
+	return append(slice[:s], slice[s+1:]...)
 }

@@ -32,6 +32,7 @@ func GetArticleByID(id string) (models.PackedArticleModel, error) {
 				return result, err
 			}
 
+			result.ID = v.ID
 			result.Content = v.Content
 			result.Author = author
 			result.CreatedAt = v.CreatedAt

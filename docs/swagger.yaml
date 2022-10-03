@@ -53,6 +53,22 @@ definitions:
     - body
     - title
     type: object
+  models.CreateAuthorModel:
+    properties:
+      firstname:
+        example: John
+        maxLength: 50
+        minLength: 2
+        type: string
+      lastname:
+        example: Doe
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - firstname
+    - lastname
+    type: object
   models.JSONErrorResponse:
     properties:
       error:
@@ -174,4 +190,35 @@ paths:
       summary: get article by id
       tags:
       - articles
+  /v2/author:
+    post:
+      consumes:
+      - application/json
+      description: create a new author
+      parameters:
+      - description: author body
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateAuthorModel'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Author'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Create author
+      tags:
+      - authors
 swagger: "2.0"
