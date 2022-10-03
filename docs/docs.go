@@ -96,10 +96,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/models.Article"
-                                            }
+                                            "$ref": "#/definitions/models.Article"
                                         }
                                     }
                                 }

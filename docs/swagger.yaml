@@ -110,9 +110,7 @@ paths:
             - $ref: '#/definitions/models.JSONResponse'
             - properties:
                 data:
-                  items:
-                    $ref: '#/definitions/models.Article'
-                  type: array
+                  $ref: '#/definitions/models.Article'
               type: object
         "400":
           description: Bad Request
