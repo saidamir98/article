@@ -43,6 +43,116 @@ func main() {
 		panic(err)
 	}
 
+	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+		Content: models.Content{
+			Title: "1",
+			Body:  "Impsume smth smth smthsmth",
+		},
+		AuthorID: "eb9eb7f9-47ca-4f75-815b-cd5c901b4df2",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+		Content: models.Content{
+			Title: "2",
+			Body:  "Impsume smth smth smthsmth",
+		},
+		AuthorID: "eb9eb7f9-47ca-4f75-815b-cd5c901b4df2",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+		Content: models.Content{
+			Title: "3",
+			Body:  "Impsume smth smth smthsmth",
+		},
+		AuthorID: "eb9eb7f9-47ca-4f75-815b-cd5c901b4df2",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+		Content: models.Content{
+			Title: "4",
+			Body:  "Impsume smth smth smthsmth",
+		},
+		AuthorID: "eb9eb7f9-47ca-4f75-815b-cd5c901b4df2",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+		Content: models.Content{
+			Title: "5",
+			Body:  "Impsume smth smth smthsmth",
+		},
+		AuthorID: "eb9eb7f9-47ca-4f75-815b-cd5c901b4df2",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+		Content: models.Content{
+			Title: "1",
+			Body:  "Impsume smth smth smthsmth",
+		},
+		AuthorID: "eb9eb7f9-47ca-4f75-815b-cd5c901b4df2",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+		Content: models.Content{
+			Title: "2",
+			Body:  "Impsume smth smth smthsmth",
+		},
+		AuthorID: "eb9eb7f9-47ca-4f75-815b-cd5c901b4df2",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+		Content: models.Content{
+			Title: "3",
+			Body:  "Impsume smth smth smthsmth",
+		},
+		AuthorID: "eb9eb7f9-47ca-4f75-815b-cd5c901b4df2",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+		Content: models.Content{
+			Title: "4",
+			Body:  "Impsume smth smth smthsmth",
+		},
+		AuthorID: "eb9eb7f9-47ca-4f75-815b-cd5c901b4df2",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+		Content: models.Content{
+			Title: "5",
+			Body:  "Impsume smth smth smthsmth",
+		},
+		AuthorID: "eb9eb7f9-47ca-4f75-815b-cd5c901b4df2",
+	})
+	if err != nil {
+		panic(err)
+	}
+
 	r := gin.Default()
 
 	r.GET("/ping", func(c *gin.Context) {
@@ -51,7 +161,7 @@ func main() {
 		})
 	})
 
-	v1 := r.Group("/v1")
+	v1 := r.Group("/v2")
 	{
 		v1.POST("/article", handlers.CreateArticle)
 		v1.GET("/article/:id", handlers.GetArticleByID)

@@ -95,8 +95,20 @@ definitions:
       updated_at:
         type: string
     required:
-    - author
     - body
+    - title
+    type: object
+  models.UpdateArticleModel:
+    properties:
+      body:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+    required:
+    - body
+    - id
     - title
     type: object
 info:
@@ -113,6 +125,19 @@ paths:
       consumes:
       - application/json
       description: get articles
+      parameters:
+      - description: "0"
+        in: query
+        name: offset
+        type: integer
+      - description: "10"
+        in: query
+        name: limit
+        type: integer
+      - description: smth
+        in: query
+        name: search
+        type: string
       produces:
       - application/json
       responses:
@@ -160,7 +185,66 @@ paths:
       summary: Create article
       tags:
       - articles
+    put:
+      consumes:
+      - application/json
+      description: update a new article
+      parameters:
+      - description: article body
+        in: body
+        name: article
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateArticleModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Article'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: Update article
+      tags:
+      - articles
   /v2/article/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete an article by id
+      parameters:
+      - description: Article ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.PackedArticleModel'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorResponse'
+      summary: delete article by id
+      tags:
+      - articles
     get:
       consumes:
       - application/json

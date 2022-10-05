@@ -24,6 +24,12 @@ type CreateArticleModel struct {
 	AuthorID string `json:"author_id" binding:"required"`
 }
 
+// UpdateArticleModel ...
+type UpdateArticleModel struct {
+	ID      string `json:"id" binding:"required"`
+	Content        // Promoted fields
+}
+
 // PackedArticleModel ...
 type PackedArticleModel struct {
 	ID        string     `json:"id"`
