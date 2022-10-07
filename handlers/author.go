@@ -3,7 +3,6 @@ package handlers
 import (
 	"net/http"
 	"uacademy/article/models"
-	"uacademy/article/storage"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -19,7 +18,7 @@ import (
 // @Success     201    {object} models.JSONResponse{data=models.Author}
 // @Failure     400    {object} models.JSONErrorResponse
 // @Router      /v2/author [post]
-func CreateAuthor(c *gin.Context) {
+func (h Handler) CreateAuthor(c *gin.Context) {
 	var body models.CreateAuthorModel
 	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(http.StatusBadRequest, models.JSONErrorResponse{Error: err.Error()})
@@ -30,7 +29,7 @@ func CreateAuthor(c *gin.Context) {
 
 	id := uuid.New()
 
-	err := storage.AddAuthor(id.String(), body)
+	err := h.Stg.AddAuthor(id.String(), body)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, models.JSONErrorResponse{
 			Error: err.Error(),
@@ -38,7 +37,7 @@ func CreateAuthor(c *gin.Context) {
 		return
 	}
 
-	author, err := storage.GetAuthorByID(id.String())
+	author, err := h.Stg.GetAuthorByID(id.String())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.JSONErrorResponse{
 			Error: err.Error(),
@@ -62,12 +61,12 @@ func CreateAuthor(c *gin.Context) {
 // @Success     200 {object} models.JSONResponse{data=models.Author}
 // @Failure     400 {object} models.JSONErrorResponse
 // @Router      /v2/author/{id} [get]
-func GetAuthorByID(c *gin.Context) {
+func (h Handler) GetAuthorByID(c *gin.Context) {
 	idStr := c.Param("id")
 
 	// TODO - validation
 
-	author, err := storage.GetAuthorByID(idStr)
+	author, err := h.Stg.GetAuthorByID(idStr)
 	if err != nil {
 		c.JSON(http.StatusNotFound, models.JSONErrorResponse{
 			Error: err.Error(),
@@ -89,8 +88,8 @@ func GetAuthorByID(c *gin.Context) {
 // @Produce     json
 // @Success     200 {object} models.JSONResponse{data=[]models.Author}
 // @Router      /v2/author [get]
-func GetAuthorList(c *gin.Context) {
-	authorList, err := storage.GetAuthorList()
+func (h Handler) GetAuthorList(c *gin.Context) {
+	authorList, err := h.Stg.GetAuthorList()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.JSONErrorResponse{
 			Error: err.Error(),

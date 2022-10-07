@@ -1,4 +1,4 @@
-package storage
+package inmemory
 
 import (
 	"errors"
@@ -7,11 +7,8 @@ import (
 	"uacademy/article/models"
 )
 
-// InMemoryArticleData ...
-var InMemoryArticleData []models.Article
-
 // AddArticle ...
-func AddArticle(id string, entity models.CreateArticleModel) error {
+func (im InMemory) AddArticle(id string, entity models.CreateArticleModel) error {
 	var article models.Article
 	article.ID = id
 	article.Content = entity.Content
@@ -19,17 +16,17 @@ func AddArticle(id string, entity models.CreateArticleModel) error {
 	article.AuthorID = entity.AuthorID
 	article.CreatedAt = time.Now()
 
-	InMemoryArticleData = append(InMemoryArticleData, article)
+	im.Db.InMemoryArticleData = append(im.Db.InMemoryArticleData, article)
 
 	return nil
 }
 
 // GetArticleByID ...
-func GetArticleByID(id string) (models.PackedArticleModel, error) {
+func (im InMemory) GetArticleByID(id string) (models.PackedArticleModel, error) {
 	var result models.PackedArticleModel
-	for _, v := range InMemoryArticleData {
+	for _, v := range im.Db.InMemoryArticleData {
 		if v.ID == id && v.DeletedAt == nil {
-			author, err := GetAuthorByID(v.AuthorID)
+			author, err := im.GetAuthorByID(v.AuthorID)
 			if err != nil {
 				return result, err
 			}
@@ -47,10 +44,10 @@ func GetArticleByID(id string) (models.PackedArticleModel, error) {
 }
 
 // GetArticleList ...
-func GetArticleList(offset, limit int, search string) (resp []models.Article, err error) {
+func (im InMemory) GetArticleList(offset, limit int, search string) (resp []models.Article, err error) {
 	off := 0
 	c := 0
-	for _, v := range InMemoryArticleData {
+	for _, v := range im.Db.InMemoryArticleData {
 		if v.DeletedAt == nil && (strings.Contains(v.Title, search) || strings.Contains(v.Body, search)) {
 			if offset <= off {
 				c++
@@ -69,13 +66,13 @@ func GetArticleList(offset, limit int, search string) (resp []models.Article, er
 }
 
 // UpdateArticle ...
-func UpdateArticle(entity models.UpdateArticleModel) error {
-	for i, v := range InMemoryArticleData {
+func (im InMemory) UpdateArticle(entity models.UpdateArticleModel) error {
+	for i, v := range im.Db.InMemoryArticleData {
 		if v.ID == entity.ID && v.DeletedAt == nil {
 			v.Content = entity.Content
 			t := time.Now()
 			v.UpdatedAt = &t
-			InMemoryArticleData[i] = v
+			im.Db.InMemoryArticleData[i] = v
 			return nil
 		}
 	}
@@ -83,15 +80,15 @@ func UpdateArticle(entity models.UpdateArticleModel) error {
 }
 
 // DeleteArticle ...
-func DeleteArticle(id string) error {
-	for i, v := range InMemoryArticleData {
+func (im InMemory) DeleteArticle(id string) error {
+	for i, v := range im.Db.InMemoryArticleData {
 		if v.ID == id {
 			if v.DeletedAt != nil {
 				return errors.New("article already deleted")
 			}
 			t := time.Now()
 			v.DeletedAt = &t
-			InMemoryArticleData[i] = v
+			im.Db.InMemoryArticleData[i] = v
 			return nil
 		}
 	}

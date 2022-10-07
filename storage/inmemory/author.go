@@ -1,4 +1,4 @@
-package storage
+package inmemory
 
 import (
 	"errors"
@@ -6,25 +6,22 @@ import (
 	"uacademy/article/models"
 )
 
-// InMemoryAuthorData ...
-var InMemoryAuthorData []models.Author
-
 // AddAuthor ...
-func AddAuthor(id string, entity models.CreateAuthorModel) error {
+func (im InMemory) AddAuthor(id string, entity models.CreateAuthorModel) error {
 	var author models.Author
 	author.ID = id
 	author.Firstname = entity.Firstname
 	author.Lastname = entity.Lastname
 	author.CreatedAt = time.Now()
 
-	InMemoryAuthorData = append(InMemoryAuthorData, author)
+	im.Db.InMemoryAuthorData = append(im.Db.InMemoryAuthorData, author)
 	return nil
 }
 
 // GetAuthorByID ...
-func GetAuthorByID(id string) (models.Author, error) {
+func (im InMemory) GetAuthorByID(id string) (models.Author, error) {
 	var result models.Author
-	for _, v := range InMemoryAuthorData {
+	for _, v := range im.Db.InMemoryAuthorData {
 		if v.ID == id {
 			result = v
 			return result, nil
@@ -34,7 +31,7 @@ func GetAuthorByID(id string) (models.Author, error) {
 }
 
 // GetAuthorList ...
-func GetAuthorList() (resp []models.Author, err error) {
-	resp = InMemoryAuthorData
+func (im InMemory) GetAuthorList() (resp []models.Author, err error) {
+	resp = im.Db.InMemoryAuthorData
 	return resp, err
 }

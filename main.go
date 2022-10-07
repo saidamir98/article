@@ -7,6 +7,7 @@ import (
 	"uacademy/article/handlers"
 	"uacademy/article/models"
 	"uacademy/article/storage"
+	"uacademy/article/storage/inmemory"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -24,7 +25,12 @@ func main() {
 	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
 	docs.SwaggerInfo.Version = "2.0"
 
-	err := storage.AddAuthor("eb9eb7f9-47ca-4f75-815b-cd5c901b4df2", models.CreateAuthorModel{
+	var stg storage.StorageI
+	stg = inmemory.InMemory{
+		Db: &inmemory.DB{},
+	}
+
+	err := stg.AddAuthor("eb9eb7f9-47ca-4f75-815b-cd5c901b4df2", models.CreateAuthorModel{
 		Firstname: "John",
 		Lastname:  "Doe",
 	})
@@ -32,7 +38,7 @@ func main() {
 		panic(err)
 	}
 
-	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err = stg.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "Lorem",
 			Body:  "Impsume smth smth smthsmth",
@@ -43,7 +49,7 @@ func main() {
 		panic(err)
 	}
 
-	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err = stg.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "1",
 			Body:  "Impsume smth smth smthsmth",
@@ -54,7 +60,7 @@ func main() {
 		panic(err)
 	}
 
-	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err = stg.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "2",
 			Body:  "Impsume smth smth smthsmth",
@@ -65,7 +71,7 @@ func main() {
 		panic(err)
 	}
 
-	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err = stg.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "3",
 			Body:  "Impsume smth smth smthsmth",
@@ -76,7 +82,7 @@ func main() {
 		panic(err)
 	}
 
-	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err = stg.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "4",
 			Body:  "Impsume smth smth smthsmth",
@@ -87,7 +93,7 @@ func main() {
 		panic(err)
 	}
 
-	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err = stg.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "5",
 			Body:  "Impsume smth smth smthsmth",
@@ -98,7 +104,7 @@ func main() {
 		panic(err)
 	}
 
-	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err = stg.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "1",
 			Body:  "Impsume smth smth smthsmth",
@@ -109,7 +115,7 @@ func main() {
 		panic(err)
 	}
 
-	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err = stg.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "2",
 			Body:  "Impsume smth smth smthsmth",
@@ -120,7 +126,7 @@ func main() {
 		panic(err)
 	}
 
-	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err = stg.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "3",
 			Body:  "Impsume smth smth smthsmth",
@@ -131,7 +137,7 @@ func main() {
 		panic(err)
 	}
 
-	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err = stg.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "4",
 			Body:  "Impsume smth smth smthsmth",
@@ -142,7 +148,7 @@ func main() {
 		panic(err)
 	}
 
-	err = storage.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
+	err = stg.AddArticle("b6c46a35-d78b-4f1d-80fe-8d617f83ec6c", models.CreateArticleModel{
 		Content: models.Content{
 			Title: "5",
 			Body:  "Impsume smth smth smthsmth",
@@ -161,17 +167,21 @@ func main() {
 		})
 	})
 
+	h := handlers.Handler{
+		Stg: stg,
+	}
+
 	v1 := r.Group("/v2")
 	{
-		v1.POST("/article", handlers.CreateArticle)
-		v1.GET("/article/:id", handlers.GetArticleByID)
-		v1.GET("/article", handlers.GetArticleList)
-		v1.PUT("/article", handlers.UpdateArticle)
-		v1.DELETE("/article/:id", handlers.DeleteArticle)
+		v1.POST("/article", h.CreateArticle)
+		v1.GET("/article/:id", h.GetArticleByID)
+		v1.GET("/article", h.GetArticleList)
+		v1.PUT("/article", h.UpdateArticle)
+		v1.DELETE("/article/:id", h.DeleteArticle)
 
-		v1.POST("/author", handlers.CreateAuthor)
-		v1.GET("/author/:id", handlers.GetAuthorByID)
-		v1.GET("/author", handlers.GetAuthorList)
+		v1.POST("/author", h.CreateAuthor)
+		v1.GET("/author/:id", h.GetAuthorByID)
+		v1.GET("/author", h.GetAuthorList)
 	}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
