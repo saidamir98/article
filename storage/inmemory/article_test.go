@@ -7,58 +7,86 @@ import (
 	"uacademy/article/storage/inmemory"
 )
 
+type AddArticleTestModel struct {
+	name       string
+	id         string
+	data       models.CreateArticleModel
+	wantError  error
+	wantResult models.PackedArticleModel
+}
+
 func TestAddArticle(t *testing.T) {
 	var err error
 	IM := inmemory.InMemory{
 		Db: &inmemory.DB{},
 	}
 
-	err = IM.AddAuthor("626f1e10-58a2-414e-83c5-899b92ea0ff5", models.CreateAuthorModel{
+	errorAuthorNotFound := errors.New("author not found")
+
+	authorID := "626f1e10-58a2-414e-83c5-899b92ea0ff5"
+	authorData := models.CreateAuthorModel{
 		Firstname: "John",
 		Lastname:  "Doe",
-	})
+	}
+	notFoundAuthorID := "63f0307d-8fa9-474f-a438-77319effc9ca"
+	content := models.Content{
+		Title: "Lorem",
+		Body:  "Impsume",
+	}
 
+	err = IM.AddAuthor(authorID, authorData)
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
 
-	err = IM.AddArticle("20455551-7263-4009-91bd-3fa6a10e3827", models.CreateArticleModel{
-		Content: models.Content{
-			Title: "Lorem",
-			Body:  "Impsume",
+	var tests []AddArticleTestModel = []AddArticleTestModel{
+		{
+			name: "success",
+			id:   "20455551-7263-4009-91bd-3fa6a10e3827",
+			data: models.CreateArticleModel{
+				Content:  content,
+				AuthorID: authorID,
+			},
+			wantError: nil,
+			wantResult: models.PackedArticleModel{
+				Content: content,
+			},
 		},
-		AuthorID: "626f1e10-58a2-414e-83c5-899b92ea0ff5",
-	})
-
-	if err != nil {
-		t.Errorf("IM.AddArticle() got error: %v", err)
-	}
-
-	article, err := IM.GetArticleByID("20455551-7263-4009-91bd-3fa6a10e3827")
-	if err != nil {
-		t.Errorf("IM.AddArticle() got error: %v", err)
-	}
-
-	if article.Title != "Lorem" || article.Body != "Impsume" {
-		t.Errorf("mitmatch between data")
-	}
-
-	err = IM.AddArticle("20455551-7263-4009-91bd-3fa6a10e3827", models.CreateArticleModel{
-		Content: models.Content{
-			Title: "Lorem",
-			Body:  "Impsume",
+		{
+			name: "fail",
+			id:   "30455551-7263-4009-91bd-3fa6a10e3827",
+			data: models.CreateArticleModel{
+				Content:  content,
+				AuthorID: notFoundAuthorID,
+			},
+			wantError:  errorAuthorNotFound,
+			wantResult: models.PackedArticleModel{},
 		},
-		AuthorID: "408bdc75-65e8-4f72-8c65-e33855cfccbe",
-	})
-
-	expectedError := errors.New("author not found")
-	if err == nil {
-		t.Errorf("IM.AddArticle() expected error but got nil")
-	} else {
-		if err.Error() != expectedError.Error() {
-			t.Errorf("IM.AddArticle() expected: %v, but got error: %v", expectedError, err)
-		}
 	}
 
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			err = IM.AddArticle(tt.id, tt.data)
+
+			if tt.wantError == nil {
+				if err != nil {
+					t.Errorf("IM.AddArticle() got error: %v", err)
+				}
+
+				article, err := IM.GetArticleByID(tt.id)
+				if err != nil {
+					t.Errorf("IM.AddArticle() got error: %v", err)
+				}
+
+				if tt.wantResult.Content != article.Content {
+					t.Errorf("IM.AddArticle() expected: %v but got: %v", tt.wantResult.Content, article.Content)
+				}
+			} else {
+				if tt.wantError.Error() != err.Error() {
+					t.Errorf("IM.AddArticle() expected error: %v, but got error: %v", tt.wantError, err)
+				}
+			}
+		})
+	}
 	t.Log("Test has been finished")
 }
