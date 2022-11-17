@@ -22,26 +22,17 @@ definitions:
     properties:
       created_at:
         type: string
-      firstname:
-        example: John
-        maxLength: 50
+      fullname:
+        example: John Doe
+        maxLength: 255
         minLength: 2
         type: string
       id:
         type: string
-      lastname:
-        example: Doe
-        maxLength: 50
-        minLength: 2
-        type: string
-      middlename:
-        example: O
-        type: string
       updated_at:
         type: string
     required:
-    - firstname
-    - lastname
+    - fullname
     type: object
   models.CreateArticleModel:
     properties:
@@ -58,22 +49,13 @@ definitions:
     type: object
   models.CreateAuthorModel:
     properties:
-      firstname:
-        example: John
-        maxLength: 50
+      fullname:
+        example: John Doe
+        maxLength: 255
         minLength: 2
-        type: string
-      lastname:
-        example: Doe
-        maxLength: 50
-        minLength: 2
-        type: string
-      middlename:
-        example: O
         type: string
     required:
-    - firstname
-    - lastname
+    - fullname
     type: object
   models.JSONErrorResponse:
     properties:
