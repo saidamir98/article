@@ -19,8 +19,8 @@ import (
 // @Param       article body     models.CreateArticleModel true "article body"
 // @Success     201     {object} models.JSONResponse{data=models.Article}
 // @Failure     400     {object} models.JSONErrorResponse
-// @Router      /v2/article [post]
-func (h Handler) CreateArticle(c *gin.Context) {
+// @Router      /v1/article [post]
+func (h handler) CreateArticle(c *gin.Context) {
 	var body models.CreateArticleModel
 	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(http.StatusBadRequest, models.JSONErrorResponse{Error: err.Error()})
@@ -62,8 +62,8 @@ func (h Handler) CreateArticle(c *gin.Context) {
 // @Produce     json
 // @Success     200 {object} models.JSONResponse{data=models.PackedArticleModel}
 // @Failure     400 {object} models.JSONErrorResponse
-// @Router      /v2/article/{id} [get]
-func (h Handler) GetArticleByID(c *gin.Context) {
+// @Router      /v1/article/{id} [get]
+func (h handler) GetArticleByID(c *gin.Context) {
 	idStr := c.Param("id")
 
 	// TODO - validation
@@ -91,10 +91,10 @@ func (h Handler) GetArticleByID(c *gin.Context) {
 // @Param       limit  query    int false "10"
 // @Param       search query    string false "smth"
 // @Success     200    {object} models.JSONResponse{data=[]models.Article}
-// @Router      /v2/article [get]
-func (h Handler) GetArticleList(c *gin.Context) {
-	offsetStr := c.DefaultQuery("offset", "0")
-	limitStr := c.DefaultQuery("limit", "10")
+// @Router      /v1/article [get]
+func (h handler) GetArticleList(c *gin.Context) {
+	offsetStr := c.DefaultQuery("offset", h.Cfg.DefaultOffset)
+	limitStr := c.DefaultQuery("limit", h.Cfg.DefaultLimit)
 	searchStr := c.DefaultQuery("search", "")
 
 	offset, err := strconv.Atoi(offsetStr)
@@ -135,8 +135,8 @@ func (h Handler) GetArticleList(c *gin.Context) {
 // @Param       article body     models.UpdateArticleModel true "article body"
 // @Success     200     {object} models.JSONResponse{data=models.Article}
 // @Failure     400     {object} models.JSONErrorResponse
-// @Router      /v2/article [put]
-func (h Handler) UpdateArticle(c *gin.Context) {
+// @Router      /v1/article [put]
+func (h handler) UpdateArticle(c *gin.Context) {
 	var body models.UpdateArticleModel
 	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -173,8 +173,8 @@ func (h Handler) UpdateArticle(c *gin.Context) {
 // @Produce     json
 // @Success     200 {object} models.JSONResponse{data=models.PackedArticleModel}
 // @Failure     400 {object} models.JSONErrorResponse
-// @Router      /v2/article/{id} [delete]
-func (h Handler) DeleteArticle(c *gin.Context) {
+// @Router      /v1/article/{id} [delete]
+func (h handler) DeleteArticle(c *gin.Context) {
 	idStr := c.Param("id")
 
 	article, err := h.Stg.GetArticleByID(idStr)

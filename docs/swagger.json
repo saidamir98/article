@@ -1,18 +1,14 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {
-            "name": "API Article",
-            "url": "https://john.doe.com",
-            "email": "john.doe@swagger.io"
-        },
+        "contact": {},
         "license": {
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         }
     },
     "paths": {
-        "/v2/article": {
+        "/v1/article": {
             "get": {
                 "description": "get articles",
                 "consumes": [
@@ -170,7 +166,7 @@
                 }
             }
         },
-        "/v2/article/{id}": {
+        "/v1/article/{id}": {
             "get": {
                 "description": "get an article by id",
                 "consumes": [
@@ -268,7 +264,7 @@
                 }
             }
         },
-        "/v2/author": {
+        "/v1/author": {
             "get": {
                 "description": "get author",
                 "consumes": [
@@ -356,7 +352,7 @@
                 }
             }
         },
-        "/v2/author/{id}": {
+        "/v1/author/{id}": {
             "get": {
                 "description": "get an author by id",
                 "consumes": [

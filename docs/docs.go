@@ -10,11 +10,7 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {
-            "name": "API Article",
-            "url": "https://john.doe.com",
-            "email": "john.doe@swagger.io"
-        },
+        "contact": {},
         "license": {
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -24,7 +20,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v2/article": {
+        "/v1/article": {
             "get": {
                 "description": "get articles",
                 "consumes": [
@@ -182,7 +178,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v2/article/{id}": {
+        "/v1/article/{id}": {
             "get": {
                 "description": "get an article by id",
                 "consumes": [
@@ -280,7 +276,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v2/author": {
+        "/v1/author": {
             "get": {
                 "description": "get author",
                 "consumes": [
@@ -368,7 +364,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v2/author/{id}": {
+        "/v1/author/{id}": {
             "get": {
                 "description": "get an author by id",
                 "consumes": [
